@@ -1,7 +1,8 @@
 import requests
 from utils import validate_coordinates
+from typing import Optional, Dict
 
-def get_coordinates(location, api_key):
+def get_coordinates(location: str, api_key: str) -> Optional[Dict[str, float]]:
     """
     Fetches the longitude and latitude for a given location using OpenWeather's Geocoding API.
 
@@ -36,7 +37,7 @@ def get_coordinates(location, api_key):
         print(f"Error fetching coordinates: {e}")
         return None
 
-def get_air_pollution(lat, lon, api_key):
+def get_air_pollution(lat: float, lon: float, api_key: str) -> Optional[Dict]:
     """
     Fetches air pollution data for a given latitude and longitude using OpenWeather's Air Pollution API.
 

@@ -1,4 +1,4 @@
-def validate_coordinates(lat, lon):
+def validate_coordinates(lat: float, lon: float) -> bool:
     """
     Validates that the latitude and longitude are within reasonable ranges.
 
