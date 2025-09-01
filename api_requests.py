@@ -1,4 +1,5 @@
 import requests
+from utils import validate_coordinates
 
 def get_coordinates(location, api_key):
     """
@@ -22,7 +23,12 @@ def get_coordinates(location, api_key):
         response.raise_for_status()
         data = response.json()
         if data:
-            return {"lat": data[0]["lat"], "lon": data[0]["lon"]}
+            lat, lon = data[0]["lat"], data[0]["lon"]
+            if validate_coordinates(lat, lon):
+                return {"lat": lat, "lon": lon}
+            else:
+                print(f"Invalid coordinates received for location: {location}")
+                return None
         else:
             print(f"No results found for location: {location}")
             return None
