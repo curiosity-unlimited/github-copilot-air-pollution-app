@@ -32,7 +32,7 @@
     git checkout edit-mode
     ```
 
-5. Checkout to `agent-mode` if you're working on Edit mode from the course:
+5. Checkout to `agent-mode` if you're working on Agent mode from the course:
     ```
     git checkout agent-mode
     ```
