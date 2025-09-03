@@ -6,8 +6,10 @@
 - `edit-mode` and `agent-mode` branches can be found.
     - If you're working on Edit mode from the course, please checkout to the `edit-mode`.
     - If you're working on Agent mode from the course, please checkout to the `agent-mode`.
-- From there, you can compare your progress with this project, commit-by-commit, step-by-step. Just checkout to specific commmit as the Setup section described below.
-- There's also a file named `PROMPTS.md` where you can find all the promtps that are used in this course.
+- From there, you can compare your progress with this project, commit-by-commit, step-by-step. Just checkout to specific commit as the Setup section described below.
+- There's also a file named `PROMPTS.md` where you can find all the prompts that are used in this course.
+- Secure API key handling using environment variables (.env file)
+- Air quality data retrieval and display for any location worldwide
 
 ## Setup
 
@@ -41,6 +43,32 @@
     ```
     git checkout <commit-hash>
     ```
+
+7. Install dependencies using uv:
+    
+    This project uses [uv](https://docs.astral.sh/uv/) for dependency management. If you don't have uv installed, you can install it following the instructions on their [website](https://docs.astral.sh/uv/installation/).
+    
+    ```
+    # Create a virtual environment and install dependencies
+    uv venv
+    source .venv/bin/activate  # On Windows, use .venv\Scripts\activate
+    uv sync
+    
+    # To add new dependencies
+    uv add <python-package>
+    ```
+
+8. Set up your API key:
+
+    This application requires an API key from [OpenWeatherMap](https://openweathermap.org/). 
+    
+    ```
+    # Create a .env file in the root directory based on the example
+    cp .env.example .env
+    # Then edit the .env file to add your actual API key
+    ```
+    
+    **IMPORTANT**: The `.env` file contains sensitive information and is included in `.gitignore` to prevent it from being committed to version control. Never share your API key or commit it to the repository.
 
 ## License
 

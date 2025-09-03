@@ -8,3 +8,11 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Keep uv.lock in version control
+# Do not ignore uv.lock
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
