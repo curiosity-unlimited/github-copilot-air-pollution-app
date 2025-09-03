@@ -1,6 +1,6 @@
 """API request functions for OpenWeatherMap."""
 import requests
-from utils import load_api_key
+from utils import load_api_key, validate_coordinates
 
 def get_geocoding_data(location):
     """
@@ -29,15 +29,25 @@ def get_geocoding_data(location):
         data = response.json()
         
         if data and len(data) > 0:
+            lat = data[0].get("lat")
+            lon = data[0].get("lon")
+            
+            # Validate coordinates from the API response
+            validate_coordinates(lat, lon)
+            
             return {
                 "name": data[0].get("name", "Unknown"),
                 "country": data[0].get("country", "Unknown"),
-                "lat": data[0].get("lat"),
-                "lon": data[0].get("lon"),
+                "lat": lat,
+                "lon": lon,
                 "state": data[0].get("state", "")
             }
         return None
     
+    except ValueError as e:
+        # Handle coordinate validation errors
+        print(f"Coordinate validation error: {e}")
+        return None
     except requests.exceptions.RequestException as e:
         print(f"Error fetching geocoding data: {e}")
         return None
@@ -54,16 +64,19 @@ def get_air_pollution_data(lat, lon):
         dict: Air pollution data including AQI and components
         None: If an error occurs
     """
-    api_key = load_api_key()
-    base_url = "http://api.openweathermap.org/data/2.5/air_pollution"
-    
-    params = {
-        "lat": lat,
-        "lon": lon,
-        "appid": api_key
-    }
-    
     try:
+        # Validate coordinates before making the API request
+        validate_coordinates(lat, lon)
+        
+        api_key = load_api_key()
+        base_url = "http://api.openweathermap.org/data/2.5/air_pollution"
+        
+        params = {
+            "lat": lat,
+            "lon": lon,
+            "appid": api_key
+        }
+        
         response = requests.get(base_url, params=params)
         response.raise_for_status()
         
@@ -77,6 +90,10 @@ def get_air_pollution_data(lat, lon):
             }
         return None
     
+    except ValueError as e:
+        # Handle coordinate validation errors
+        print(f"Coordinate validation error: {e}")
+        return None
     except requests.exceptions.RequestException as e:
         print(f"Error fetching air pollution data: {e}")
         return None

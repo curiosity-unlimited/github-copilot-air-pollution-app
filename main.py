@@ -1,4 +1,5 @@
 from api_requests import get_geocoding_data, get_air_pollution_data
+from utils import validate_coordinates
 
 def display_air_quality_info(aqi):
     """Display air quality information based on AQI value."""
@@ -58,8 +59,18 @@ def main():
         
         print(f"\nFetching air pollution data for {location_name}...")
         
+        # Validate coordinates before proceeding
+        try:
+            lat = geo_data['lat']
+            lon = geo_data['lon']
+            validate_coordinates(lat, lon)
+        except ValueError as e:
+            print(f"Error: {e}")
+            print("Please try a different location.")
+            continue
+            
         # Get air pollution data using the latitude and longitude
-        pollution_data = get_air_pollution_data(geo_data['lat'], geo_data['lon'])
+        pollution_data = get_air_pollution_data(lat, lon)
         
         if not pollution_data:
             print("Failed to retrieve air pollution data. Please try again.")
