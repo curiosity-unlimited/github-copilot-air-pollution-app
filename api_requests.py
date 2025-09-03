@@ -1,17 +1,18 @@
 """API request functions for OpenWeatherMap."""
 import requests
+from typing import Dict, Optional, Union, Any
 from utils import load_api_key, validate_coordinates
 
-def get_geocoding_data(location):
+def get_geocoding_data(location: str) -> Optional[Dict[str, Any]]:
     """
     Get geocoding data for a location using OpenWeatherMap's Geocoding API.
     
     Args:
-        location (str): The location to search for (city name, state, country)
+        location: The location to search for (city name, state, country)
     
     Returns:
-        dict: The first geocoding result containing latitude and longitude
-        None: If no results found or an error occurs
+        Optional[Dict[str, Any]]: The first geocoding result containing latitude and longitude,
+                                 or None if no results found or an error occurs
     """
     api_key = load_api_key()
     base_url = "http://api.openweathermap.org/geo/1.0/direct"
@@ -52,17 +53,17 @@ def get_geocoding_data(location):
         print(f"Error fetching geocoding data: {e}")
         return None
 
-def get_air_pollution_data(lat, lon):
+def get_air_pollution_data(lat: float, lon: float) -> Optional[Dict[str, Any]]:
     """
     Get air pollution data for a location using OpenWeatherMap's Air Pollution API.
     
     Args:
-        lat (float): Latitude of the location
-        lon (float): Longitude of the location
+        lat: Latitude of the location
+        lon: Longitude of the location
     
     Returns:
-        dict: Air pollution data including AQI and components
-        None: If an error occurs
+        Optional[Dict[str, Any]]: Air pollution data including AQI and components,
+                                 or None if an error occurs
     """
     try:
         # Validate coordinates before making the API request

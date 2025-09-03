@@ -1,8 +1,17 @@
 from api_requests import get_geocoding_data, get_air_pollution_data
 from utils import validate_coordinates
+from typing import Dict, Any, Optional, List, Union, Tuple
 
-def display_air_quality_info(aqi):
-    """Display air quality information based on AQI value."""
+def display_air_quality_info(aqi: int) -> str:
+    """
+    Display air quality information based on AQI value.
+    
+    Args:
+        aqi: The Air Quality Index value (1-5)
+        
+    Returns:
+        str: Description of the air quality level
+    """
     aqi_descriptions = {
         1: "Good - Air quality is satisfactory, and air pollution poses little or no risk.",
         2: "Fair - Air quality is acceptable. However, there may be a risk for some people.",
@@ -13,8 +22,16 @@ def display_air_quality_info(aqi):
     
     return aqi_descriptions.get(aqi, "Unknown AQI level")
 
-def format_components(components):
-    """Format air pollution components for display."""
+def format_components(components: Dict[str, float]) -> str:
+    """
+    Format air pollution components for display.
+    
+    Args:
+        components: Dictionary of component codes and their values
+        
+    Returns:
+        str: Formatted string with component names and values
+    """
     component_names = {
         "co": "Carbon Monoxide (CO)",
         "no": "Nitrogen Monoxide (NO)",
@@ -26,14 +43,19 @@ def format_components(components):
         "nh3": "Ammonia (NH3)"
     }
     
-    formatted = []
+    formatted: List[str] = []
     for code, value in components.items():
         name = component_names.get(code, code)
         formatted.append(f"{name}: {value} μg/m³")
     
     return "\n".join(formatted)
 
-def main():
+def main() -> None:
+    """
+    Main function to run the Air Pollution Data Viewer application.
+    
+    Handles user input, API requests, and displays results.
+    """
     print("=== Air Pollution Data Viewer ===")
     print("Enter a location to get current air pollution data.")
     print("(Example: London, UK or New York, NY, US)")

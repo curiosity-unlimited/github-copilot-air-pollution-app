@@ -1,13 +1,17 @@
 """Utility functions for the application."""
 import os
+from typing import Optional, Union, NoReturn, Tuple, Dict, List, Any, cast
 from dotenv import load_dotenv
 
-def load_api_key():
+def load_api_key() -> str:
     """
     Load the API key from .env file.
     
     Returns:
         str: The API key for OpenWeatherMap
+        
+    Raises:
+        ValueError: If API_KEY is not found in the .env file
     """
     load_dotenv()
     api_key = os.getenv("API_KEY")
@@ -17,13 +21,13 @@ def load_api_key():
     
     return api_key
 
-def validate_coordinates(lat, lon):
+def validate_coordinates(lat: Union[int, float], lon: Union[int, float]) -> bool:
     """
     Validate that latitude and longitude values are within valid ranges.
     
     Args:
-        lat (float): Latitude value to validate (-90 to 90)
-        lon (float): Longitude value to validate (-180 to 180)
+        lat: Latitude value to validate (-90 to 90)
+        lon: Longitude value to validate (-180 to 180)
     
     Returns:
         bool: True if coordinates are valid
